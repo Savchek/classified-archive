@@ -81,13 +81,17 @@ const DynamicDragBox = ({ layoutId, active, setActiveHandle }) => {
 				e => setActiveHandle(e, layoutElement.id)
 			}
 
-			bounds={'.dragBoxBoundry'}
-
 			style={
 				{
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
+				}
+			}
+
+			onDrag={
+				(node, x, y, deltaX, deltaY) => {
+					console.log(node, x, y, deltaX, deltaY,)
 				}
 			}
 

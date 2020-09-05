@@ -1,27 +1,63 @@
 import React, { useState, useEffect } from 'react'
 import { Rnd } from 'react-rnd'
-import { addLayoutItem } from './../data'
+import { addLayoutItem, changeAddingPanelWidth } from './../data'
 
 
 const AddingPanel = ({ styleSheet, setActive }) => {
 
 	let boxHeight = 50
-	let boxVerticalGap = 10
-	let boxNames = ['label', 'textbox', 'image']
 
 	const [boxData, setBoxData] = useState({})
+	const [canResize, setCanResize] = useState(false)
+
+	const allowResize = () => {
+		setCanResize(true)
+	}
+
 
 	useEffect(() => {
+		let boxNames = ['label', 'textbox', 'image']
+		let boxVerticalGap = 10
 		let obj = {}
 		boxNames.forEach((e, i) => obj[e] = {
 			x: '',
 			y: i * boxHeight + boxVerticalGap * (i + 1)
 		})
 		setBoxData(obj)
-	}, [])
+
+
+		const cancelResize = () => {
+			setCanResize(false)
+		}
+
+		const resize = (e) => {
+			canResize && changeAddingPanelWidth(e)
+		}
+
+		window.addEventListener('mouseup', cancelResize)
+		window.addEventListener('mousemove', resize)
+
+		return () => {
+			window.removeEventListener('mouseup', cancelResize)
+			window.removeEventListener('mousemove', resize)
+		}
+
+	}, [boxHeight, canResize])
 
 	return (
 		<div style={styleSheet}>
+			<div
+				style={{
+					position: 'absolute',
+					left: '-5px',
+					top: '0',
+					width: '10px',
+					height: '100%',
+					backgroundColor: 'rgba(100, 255, 100, 0.8)',
+					cursor: 'col-resize',
+				}}
+				onMouseDown={allowResize}
+			/>
 
 			{
 				Object.keys(boxData).map(k => {

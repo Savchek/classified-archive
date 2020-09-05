@@ -6,10 +6,9 @@ import ActionPanel from './ActionPanel'
 import AddingPanel from './AddingPanel'
 
 
-const EditTemplate = () => {
+const EditTemplate = ({ settings }) => {
 
 	const [active, setActive] = useState(-1)
-
 
 	const setActiveHandle = (e, activeId) => {
 		if (active === activeId) return
@@ -32,60 +31,52 @@ const EditTemplate = () => {
 		})
 	}
 
-
 	return (
 		<div style={{
-			display: 'flex',
-			flexDirection: 'column',
+			position: 'relative',
 			height: '100vh',
 			width: '100vw'
 		}}>
 
 
-			<div style={{
-				display: 'flex',
-				height: '85vh',
-				width: '100vw'
-			}}>
+			<div
+				style={{
+					border: '1px solid cyan',
+					backgroundColor: 'rgba(100, 150, 255, 0.2)',
+					height: '100vh',
+					width: '100%',
+					marginRight: '15vw',
+				}}>
 
-				<div
-					className='dragBoxBoundry'
-					style={{
-						border: '1px solid cyan',
-						width: '85vw',
-						height: 'inherit',
-						backgroundColor: 'rgba(100, 150, 255, 0.2)'
-					}}>
-
-					<button onClick={gotoList}>Go to List</button>
-					{loopLayout()}
-
-				</div>
-
-				<AddingPanel
-					setActive={setActive}
-					styleSheet={{
-						width: '15vw',
-						height: 'inherit',
-						backgroundColor: 'rgba(100, 255, 100, 0.2)',
-						border: '1px solid green',
-						position: 'fixed',
-						right: '0',
-						top: '0',
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-					}} />
+				<button onClick={gotoList}>Go to List</button>
+				{loopLayout()}
 
 			</div>
+
+			<AddingPanel
+				setActive={setActive}
+				styleSheet={{
+					width: settings.layout.addingPanelWidth + 'px',
+					height: settings.layout.addingPanelHeight + 'px',
+					backgroundColor: 'rgba(100, 255, 100, 0.2)',
+					border: '1px solid green',
+					position: 'fixed',
+					right: '0',
+					top: '0',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					overflow: 'hidden',
+				}}
+			/>
 
 
 			<ActionPanel
 				layoutItemID={active}
 				setActive={setActive}
 				styleSheet={{
-					height: '15vh',
-					width: '100vw',
+					width: '100%',
+					height: settings.layout.actionPanelHeight + 'px',
 					backgroundColor: 'rgba(255, 100, 100, 0.2)',
 					border: '1px solid red',
 					position: 'fixed',
@@ -97,4 +88,4 @@ const EditTemplate = () => {
 	)
 }
 
-export default inject('templates')(observer(EditTemplate))
+export default inject('templates', 'settings')(observer(EditTemplate))

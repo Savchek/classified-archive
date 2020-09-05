@@ -97,11 +97,6 @@ export const templates = observable(
 				}
 			}
 		},
-		setSize(layoutID, size) {
-			if (chosenTemplate !== -1) {
-				this[chosenTemplate].layout[layoutID].size = size
-			}
-		},
 		setPos(layoutID, pos) {
 			if (chosenTemplate !== -1) {
 				this[chosenTemplate].layout[layoutID].pos = pos
@@ -118,7 +113,6 @@ export const templates = observable(
 		}
 	},
 	{
-		setSize: action,
 		setPos: action,
 		editTemplateElementName: action,
 		setImageFitType: action,
@@ -307,7 +301,9 @@ export const updSize = (layoutID, pos, ref) => {
 		width: ref.style.width,
 		height: ref.style.height
 	}
-	templates.setSize(layoutID, size)
+	if (chosenTemplate !== -1) {
+		templates[chosenTemplate].layout[layoutID].size = size
+	}
 
 	updPos(layoutID, pos)
 }
@@ -393,4 +389,22 @@ export const changeImageFitType = (layoutItemID, fitType) => {
 	templates.setImageFitType(layoutItemID, fitType)
 }
 
+export const settings = observable(
+	{
+		layout: {
+			addingPanelWidth: '200',
+			addingPanelHeight: '560',
+			actionPanelHeight: '200'
+		}
+	}
+)
 
+export const changeAddingPanelWidth = (e) => {
+	settings.layout.addingPanelWidth = window.innerWidth - e.pageX
+}
+
+export const changeActionPanelHeight = (e) => {
+	console.log('action panel height changing')
+	settings.layout.actionPanelHeight = window.innerHeight - e.pageY
+	settings.layout.addingPanelHeight = e.pageY
+}
