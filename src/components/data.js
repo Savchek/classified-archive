@@ -394,17 +394,23 @@ export const settings = observable(
 		layout: {
 			addingPanelWidth: '200',
 			addingPanelHeight: '560',
-			actionPanelHeight: '200'
+			actionPanelHeight: '200',
+			showAddingPanel: true,
+			showActionPanel: true,
 		}
 	}
 )
 
 export const changeAddingPanelWidth = (e) => {
-	settings.layout.addingPanelWidth = window.innerWidth - e.pageX
+	settings.layout.addingPanelWidth = document.documentElement.clientWidth - e.clientX
+}
+export const changeActionPanelHeight = (e) => {
+	settings.layout.actionPanelHeight = document.documentElement.clientHeight - e.clientY
+	settings.layout.addingPanelHeight = e.clientY
 }
 
-export const changeActionPanelHeight = (e) => {
-	console.log('action panel height changing')
-	settings.layout.actionPanelHeight = window.innerHeight - e.pageY
-	settings.layout.addingPanelHeight = e.pageY
-}
+export const displayAddingPanel = () => settings.layout.showAddingPanel = true
+export const displayActionPanel = () => settings.layout.showActionPanel = true
+
+export const hideAddingPanel = () => settings.layout.showAddingPanel = false
+export const hideActionPanel = () => settings.layout.showActionPanel = false

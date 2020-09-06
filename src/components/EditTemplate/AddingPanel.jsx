@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Rnd } from 'react-rnd'
-import { addLayoutItem, changeAddingPanelWidth } from './../data'
+import { addLayoutItem, changeAddingPanelWidth, hideAddingPanel } from './../data'
 
 
 const AddingPanel = ({ styleSheet, setActive }) => {
@@ -46,6 +46,7 @@ const AddingPanel = ({ styleSheet, setActive }) => {
 
 	return (
 		<div style={styleSheet}>
+			<button style={{ position: 'absolute', left: '-70px', top: '20px' }} onClick={hideAddingPanel}>Hide</button>
 			<div
 				style={{
 					position: 'absolute',

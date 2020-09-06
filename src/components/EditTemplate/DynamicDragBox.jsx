@@ -91,7 +91,7 @@ const DynamicDragBox = ({ layoutId, active, setActiveHandle }) => {
 
 			onDrag={
 				(node, x, y, deltaX, deltaY) => {
-					console.log(node, x, y, deltaX, deltaY,)
+					//console.log(node, x, y, deltaX, deltaY,)
 				}
 			}
 

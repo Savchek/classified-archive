@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getLayoutItem, deleteLayoutItem, imageFitTypes, changeImageFitType, changeActionPanelHeight } from './../data'
+import { getLayoutItem, deleteLayoutItem, imageFitTypes, changeImageFitType, changeActionPanelHeight, hideActionPanel } from './../data'
 
 
 const ActionPanel = ({ layoutItemID, setActive, styleSheet }) => {
@@ -78,6 +78,7 @@ const ActionPanel = ({ layoutItemID, setActive, styleSheet }) => {
 
 	return (
 		<div style={styleSheet}>
+			<button style={{ position: 'absolute', left: '20px', top: '-50px' }} onClick={hideActionPanel}>Hide</button>
 			<div
 				style={{
 					position: 'absolute',
